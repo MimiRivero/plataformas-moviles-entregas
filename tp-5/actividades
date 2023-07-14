@@ -1,0 +1,14 @@
+<html>
+      <head>
+            <title>Actividades</title>
+        <meta charset ="utf-8">
+  </head>  
+  <body>
+        <h1>Actividades</h1>
+    <ul>
+      <li><a href="consigna1">consigna 1</a></li>
+      <li><a href="consigna2">consigna 2</a></li>
+      <li><a href="consigna3">consigna 3</a></li>
+    </ul>
+  </body>  
+</html
