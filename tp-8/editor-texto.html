@@ -9,9 +9,7 @@
         .bold {
             font-weight: bold;
         }
-        .italic{
-            font-family: cursive;
-        }
+        
     </style>
 </head>
 <body>
@@ -30,43 +28,44 @@
         <div class="card">
             <div class="card-body">
                 <h2>Texto</h2>
-
+                
                 <p class="texto" id="texto">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec elementum auctor libero, vel imperdiet est. Etiam blandit facilisis ex, nec cursus metus pharetra quis. Fusce imperdiet nisl nibh, ac aliquet ante elementum vitae.</p>
 
                 <hr class="hr">
                 <h2>Agregar Texto</h2>
                 <form id="form-texto">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" aria-label="Nuevo texto">
+                        <textarea class="form-control" aria-label="Nuevo texto"></textarea>
                         <button class="btn btn-primary" type="submit">Agregar Texto</button>
                        
                     </div>
                 </form>
+                <input type="range" class="form-range" min="10" max="20" id="tamaño-texto">
                 <h2>Opciones de Formato</h2>
                 <div class="row">
                     <div class="col-12 col-md-4 my-1">
-                        <button id="btn-negrita" class="btn d-block w-100 btn-primary" data-funcion="negrita">
+                        <button id="btn-negrita" class="btn d-block w-100 btn-primary" data-funcion="negrita" data-bs-toggle="button">
                             Bold (Negrita)
                         </button>
                     </div>
                     <div class="col-12 col-md-4 my-1">
-                        <button id="btn-cursiva" class="btn d-block w-100 btn-primary" data-funcion="cursiva">
+                        <button id="btn-cursiva" class="btn d-block w-100 btn-primary" data-funcion="cursiva"data-bs-toggle="button">
                             Italic (Cursiva)
                         </button>
                     </div>
                     <div class="col-12 col-md-4 my-1">
-                        <button id="btn-subrayado" class="btn d-block w-100 btn-primary" data-funcion="subrayado">
+                        <button id="btn-subrayado" class="btn d-block w-100 btn-primary" data-funcion="subrayado"data-bs-toggle="button">
                             Underline (Subrayado)
                         </button>
                     </div>
                     <div class="col-12 col-md-4 my-1">
-                        <button id="btn-color" class="btn d-block w-100 btn-primary" data-funcion="color">
+                        <button id="btn-color" class="btn d-block w-100 btn-primary" data-funcion="color"data-bs-toggle="button">
                             Color (Azul)
                         </button>
                     </div>
                     <div class="col-12 col-md-4 my-1">
-                        <button id="btn-tamaño" class="btn d-block w-100 btn-primary" data-funcion="tamaño">
-                            Cambiar tamaño (1.5em)
+                        <button id="btn-tamaño" class="btn d-block w-100 btn-primary" data-funcion="tamaño"data-bs-toggle="button">
+                            Cambiar tamaño (1.2em)
                         </button>
                     </div>
                 </div>
@@ -82,7 +81,10 @@
          */
         function funcionNegrita() {
             // su implementación
-            document.getElementById('texto').style.fontFamily='bold';
+            // document.getElementById('texto').style.fontWeight='bold';
+            const texto= document.getElementById('texto');
+            texto.classList.toggle('bold');
+            document.getElementById('btn-negrita').classList.toggle('btn-danger');
         }
 
         /**
@@ -91,7 +93,9 @@
          */
         function funcionCursiva() {
             // su implementación
-            document.getElementById('texto').style.fontFamily='cursive';
+            // document.getElementById('texto').style.fontFamily='cursive';
+            document.getElementById('texto').classList.toggle('fst-italic');
+            document.getElementById('btn-cursiva').classList.toggle('btn-danger');
         }
 
         /**
@@ -100,16 +104,31 @@
          */
         function funcionSubrayado() {
             // su implementación
-            document.getElementById('texto').style.textDecoration='underline';
+            // document.getElementById('texto').style.textDecoration='underline';
+            document.getElementById('texto').classList.toggle('text-decoration-underline');
+            document.getElementById('btn-subrayado').classList.toggle('btn-danger');
         }
+
         function funcionColor() {
             // su implementación
-            document.getElementById('texto').style.color="blue";
+            if (document.getElementById('texto').style.color==="blue") {
+                document.getElementById('texto').style.color="";
+            }
+            else{
+                document.getElementById('texto').style.color="blue";
+            }
+            document.getElementById('btn-color').classList.toggle('btn-danger');
         }
 
         function funcionTamaño() {
             // su implementación
-            document.getElementById('texto').style.fontSize="1.5em";
+            if (document.getElementById('texto').style.fontSize==="1.2em") {
+                document.getElementById('texto').style.fontSize="16px";
+            }
+            else{
+                document.getElementById('texto').style.fontSize="1.2em";
+            }
+            document.getElementById('btn-tamaño').classList.toggle('btn-danger');
         }
 
         function agregarTexto(textonuevo) {
@@ -117,6 +136,16 @@
             nuevoTexto.innerText=textonuevo;
             document.getElementById('texto').append(nuevoTexto);
             
+        }
+        function actualizartamaño(){
+        // Conseguir el valor del slider
+        const valorInput= document.querySelector("#tamaño-texto").value;
+
+        // Conseguir el parrafo
+        const elementotexto= document.querySelector("#texto");
+
+        // Asignar el valor como tamaño del texto
+        elementotexto.style.fontSize=valorInput+"px";
         }
 
         function handlerBoton(e) {
@@ -134,20 +163,19 @@
                 case 'color':
                     funcionColor();
                     break;
-                case 'tamaño':
-                    funcionTamaño();
-                    break;
             }
         }
+        document.querySelector("#tamaño-texto").addEventListener("change",actualizartamaño);
         function handlerTexto(e) {
             e.preventDefault();
-            const input = e.target.querySelector('input');
+            const input = e.target.querySelector('textarea');
             const textonuevo= input.value;
             input.value = " ";
             agregarTexto(textonuevo);
         }
         document.querySelector('form').addEventListener('submit', handlerTexto);
         document.querySelectorAll('button.btn').forEach(e => e.addEventListener('click', handlerBoton));
+
     </script>
 </body>
 </html>
